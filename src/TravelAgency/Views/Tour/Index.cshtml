@@ -1,0 +1,58 @@
+﻿@model TourViewModel
+
+@{
+    ViewBag.Title = "Tour details";
+    Layout = "_Layout";
+}
+
+<h2>Tour details</h2>
+
+<form>
+    <div>
+        <label asp-for="Description">Description</label>
+    </div>
+    <div>
+        <input asp-for="Description" disabled />
+    </div>
+    <div>
+        <label asp-for="Country">Country</label>
+    </div>
+    <div>
+        <input asp-for="Country" disabled />
+    </div>
+    <div>
+        <label asp-for="StartDate">Start date</label>
+    </div>
+    <div>
+        <input asp-for="StartDate" disabled />
+    </div>
+    <div>
+        <label asp-for="EndDate">End date</label>
+    </div>
+    <div>
+        <input asp-for="EndDate" disabled />
+    </div>
+</form>
+
+@if (Model.CurrentReservations < Model.MaxResrvations)
+{
+    <form asp-controller="Reservation" asp-action="Add" method="post">
+        <div class="container">
+
+            <div>
+                <input hidden name="TourId" value="@Model.Id" />
+                <input hidden name="User" value="@User.Identity.Name" />
+            </div>
+
+            <button type="submit">Reserve</button>
+            <div>
+                <Label name="Comment">Comment</Label>
+                <input name="Comment" />
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <div>Maximum reservation exceeded. You cannot reserve this trip</div>
+}

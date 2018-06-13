@@ -1,0 +1,43 @@
+﻿@model IEnumerable<TourViewModel>
+
+<form asp-controller="Tour" asp-action="ListAll">
+
+    <div class="container">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        <a>Country</a>
+                    </th>
+                    <th>
+                        <a>Start date</a>
+                    </th>
+                    <th>
+                        <a>End date</a>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <span>@item.Country</span>
+                        </td>
+                        <td>
+                            <span>@item.StartDate</span>
+                        </td>
+                        <td>
+                            <span>@item.EndDate</span>
+                        </td>
+                        <td>
+                            <a asp-controller="Tour" asp-action="Index" asp-route-id="@item.Id">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</form>

@@ -1,0 +1,21 @@
+﻿@model TourSearchModel
+
+@{
+    ViewBag.Title = "Search tours";
+    Layout = "_Layout";
+}
+
+<h2>Search tours</h2>
+
+<div class="container">
+
+    <form asp-controller="Tour" asp-action="Search" method="post">
+        <div class="container">
+            <div>
+                <label asp-for="Country">Country</label>
+                <input asp-for="Country" />
+            </div>
+            <button type="submit">Search tour</button>
+        </div>
+    </form>
+</div>

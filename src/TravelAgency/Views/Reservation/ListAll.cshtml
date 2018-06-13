@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ReservationViewModel>
+
+@{
+    ViewBag.Title = "All reservations";
+    Layout = "_Layout";
+}
+
+<h2>All reservations</h2>
+
+<div class="container">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <a>Creation date</a>
+                </th>
+                <th>
+                    <a>User</a>
+                </th>
+                <th>
+                    <a>Comment</a>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <span>@item.CreationDate</span>
+                    </td>
+                    <td>
+                        <span>@item.User</span>
+                    </td>
+                    <td>
+                        <span>@item.Comment</span>
+                    </td>
+                    <td>
+                        <a asp-controller="Tour" asp-action="Index" asp-route-id="@item.TourId">Tour</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

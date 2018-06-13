@@ -1,0 +1,34 @@
+﻿@model TourViewModel
+
+@{
+    ViewBag.Title = "Add tour";
+    Layout = "_Layout";
+}
+
+<h2>Add tour</h2>
+
+<form asp-controller="Tour" asp-action="Add" method="post">
+    <div class="container">
+        <div>
+            <label asp-for="Description">Description</label>
+            <input asp-for="Description" />
+        </div>
+        <div>
+            <label asp-for="Country">Country</label>
+            <input asp-for="Country" />
+        </div>
+        <div>
+            <label asp-for="StartDate">Start date</label>
+            <input asp-for="StartDate" />
+        </div>
+        <div>
+            <label asp-for="EndDate">End date</label>
+            <input asp-for="EndDate" />
+        </div>
+        <div>
+            <label asp-for="MaxResrvations">Max reservations</label>
+            <input asp-for="MaxResrvations" />
+        </div>
+        <button type="submit">Add tour</button>
+    </div>
+</form>

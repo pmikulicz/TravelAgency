@@ -1,0 +1,10 @@
+﻿@model IEnumerable<TourViewModel>
+
+@{
+    ViewBag.Title = "Tours";
+    Layout = "_Layout";
+}
+
+<h2>List all tours</h2>
+
+<partial name="_tours" model="@Model" />
