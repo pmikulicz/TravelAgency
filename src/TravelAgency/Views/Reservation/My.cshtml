@@ -1,0 +1,12 @@
+﻿@model IEnumerable<ReservationViewModel>
+
+@{
+    ViewBag.Title = "My reservations";
+    Layout = "_Layout";
+}
+
+<div class="page-header">
+    <h1>My reservations</h1>
+</div>
+
+<partial name="_reservations" model="@Model" />

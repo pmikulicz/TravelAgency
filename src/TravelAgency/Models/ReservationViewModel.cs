@@ -14,6 +14,7 @@ namespace TravelAgency.Models
         public string Comment { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
         public DateTime CreationDate { get; set; }
 
         [Required]

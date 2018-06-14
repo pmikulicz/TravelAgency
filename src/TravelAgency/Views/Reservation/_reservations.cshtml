@@ -1,47 +1,46 @@
-﻿@model IEnumerable<TourViewModel>
+﻿@model IEnumerable<ReservationViewModel>
 
 <div class="container">
 
-    <table class="table table-hover">
+    <table class="table">
         <thead>
             <tr>
                 <th>
-                    Country
+                    <a>Creation date</a>
                 </th>
                 <th>
-                    Start date
+                    <a>User</a>
                 </th>
                 <th>
-                    End date
+                    <a>Comment</a>
                 </th>
-                <th></th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
-            {
+        {
                 <tr>
                     <td>
-                        <span>@item.Country</span>
+                        <span>@item.CreationDate</span>
                     </td>
                     <td>
-                        <span>@item.StartDate</span>
+                        <span>@item.User</span>
                     </td>
                     <td>
-                        <span>@item.EndDate</span>
+                        <span>@item.Comment</span>
                     </td>
                     <td>
-                        <a asp-controller="Tour" asp-action="Index" asp-route-id="@item.Id">Details</a>
+                        <a asp-controller="Reservation" asp-action="Edit" asp-route-id="@item.TourId">Edit</a>
                     </td>
                     @if (User.IsInRole("Admin"))
                     {
                         <td>
-                            <a asp-controller="Tour" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a asp-controller="Reservation" asp-action="Delete" asp-route-id="@item.TourId">Delete</a>
                         </td>
                     }
                 </tr>
-            }
+        }
         </tbody>
     </table>
 </div>

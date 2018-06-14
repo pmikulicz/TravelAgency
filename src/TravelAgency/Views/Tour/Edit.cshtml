@@ -1,46 +1,43 @@
 ﻿@model TourViewModel
 
 @{
-    ViewBag.Title = "Add tour";
+    ViewBag.Title = "Edit tour";
     Layout = "_Layout";
 }
 
 <div class="page-header">
-    <h1>Add tour</h1>
+    <h1>Edit tour</h1>
 </div>
 
 <div class="container">
-    <form asp-controller="Tour" asp-action="Add" method="post">
+    <form asp-controller="Tour" asp-action="Edit" method="post">
         <div class="container">
             <div class="form-group">
                 <label asp-for="Description">Description</label>
-                <input asp-for="Description" class="form-control"/>
+                <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Country">Country</label>
-                <input asp-for="Country" class="form-control"/>
+                <input asp-for="Country" class="form-control" />
                 <span asp-validation-for="Country" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="StartDate">Start date</label>
-                <input asp-for="StartDate" class="form-control"/>
+                <input asp-for="StartDate" class="form-control" />
                 <span asp-validation-for="StartDate" class="text-danger"></span>
-
             </div>
             <div class="form-group">
                 <label asp-for="EndDate">End date</label>
-                <input asp-for="EndDate" class="form-control"/>
+                <input asp-for="EndDate" class="form-control" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
-
             </div>
             <div class="form-group">
                 <label asp-for="MaxResrvations">Max reservations</label>
-                <input asp-for="MaxResrvations" class="form-control"/>
+                <input asp-for="MaxResrvations" class="form-control" />
                 <span asp-validation-for="MaxResrvations" class="text-danger"></span>
-
             </div>
-            <button type="submit"  class="btn btn-default">Add tour</button>
+            <button type="submit" class="btn btn-default">Edit tour</button>
         </div>
     </form>
 </div>

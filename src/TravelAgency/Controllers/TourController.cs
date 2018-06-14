@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using TravelAgency.Domain.Model;
 using TravelAgency.Models;
 using TravelAgency.Storage;
@@ -101,6 +101,45 @@ namespace TravelAgency.Controllers
                 MaxResrvations = t.MaxResrvations,
                 EndDate = t.EndDate
             }));
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var tour = await _context.Tours.FindAsync(id);
+            var currentReservations = _context.Reservations.Count(r => r.TourId == tour.Id);
+
+            return View(new TourViewModel
+            {
+                Id = id,
+                Country = tour.Country,
+                Description = tour.Description,
+                EndDate = tour.EndDate,
+                MaxResrvations = tour.MaxResrvations,
+                StartDate = tour.StartDate,
+                CurrentReservations = currentReservations
+            });
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(TourViewModel tour)
+        {
+            var tourToUpdate = new Tour
+            {
+                Id = tour.Id,
+                Description = tour.Description,
+                Country = tour.Country,
+                EndDate = tour.EndDate,
+                StartDate = tour.StartDate,
+                MaxResrvations = tour.MaxResrvations
+            };
+            _context.Attach(tourToUpdate);
+            _context.Update(tourToUpdate);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index", new { id = tourToUpdate.Id });
         }
     }
 }

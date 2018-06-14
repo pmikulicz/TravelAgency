@@ -3,10 +3,14 @@
     Layout = "_Layout";
 }
 
-<h2>Administration panel</h2>
+<div class="page-header">
+    <h1>Administration panel</h1>
+</div>
 
-<ul class="nav navbar-nav">
-    <li><a asp-area="" asp-controller="Tour" asp-action="Add">Add tour</a></li>
-    <li><a asp-area="" asp-controller="Reservation" asp-action="List">List all reservations</a></li>
-    <li><a asp-area="" asp-controller="Tour" asp-action="ListAll">List all tours</a></li>
-</ul>
+<div class="container">
+    <ul class="nav navbar-nav nav-stacked">
+        <li><a asp-area="" asp-controller="Tour" asp-action="Add">Add tour</a></li>
+        <li><a asp-area="" asp-controller="Reservation" asp-action="ListAll">List all reservations</a></li>
+        <li><a asp-area="" asp-controller="Tour" asp-action="ListAll">List all tours</a></li>
+    </ul>
+</div>

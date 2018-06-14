@@ -1,16 +1,16 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using TravelAgency.Domain.Model;
 using TravelAgency.Models;
 using TravelAgency.Storage;
 
 namespace TravelAgency.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class ReservationController : Controller
     {
         private readonly TravelAgencyDbContext _context;
@@ -36,6 +36,7 @@ namespace TravelAgency.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> ListAll()
         {
@@ -47,6 +48,62 @@ namespace TravelAgency.Controllers
                 Comment = r.Comment,
                 User = r.User,
                 TourId = r.TourId,
+                CreationDate = r.CreationDate
+            }));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var reservation = await _context.Reservations.FindAsync(id);
+
+            return View(new ReservationViewModel
+            {
+                Id = id,
+                User = reservation.User,
+                Comment = reservation.Comment,
+                TourId = reservation.TourId
+            });
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(ReservationViewModel reservation)
+        {
+            var reservationToUpdate = new Reservation
+            {
+                Id = reservation.Id,
+                User = reservation.User,
+                Comment = reservation.Comment,
+                TourId = reservation.TourId
+            };
+            _context.Attach(reservationToUpdate);
+            _context.Update(reservationToUpdate);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("ListAll");
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var reservationToDelete = await _context.Reservations.FindAsync(id);
+
+            _context.Remove(reservationToDelete);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("ListAll");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> My(string id)
+        {
+            var reservations = await _context.Reservations.Where(r => r.User.Equals(id)).ToListAsync();
+
+            return View(reservations.Select(r => new ReservationViewModel
+            {
+                User = r.User,
+                Comment = r.Comment,
                 CreationDate = r.CreationDate
             }));
         }
