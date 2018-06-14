@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace TravelAgency.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize("Admin")]
     public class AdministrationController : Controller
     {
         // GET

@@ -36,7 +36,7 @@ namespace TravelAgency.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize("Admin")]
         [HttpGet]
         public async Task<IActionResult> ListAll()
         {
@@ -56,6 +56,9 @@ namespace TravelAgency.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var reservation = await _context.Reservations.FindAsync(id);
+
+            if (reservation == null)
+                return NotFound();
 
             return View(new ReservationViewModel
             {
@@ -83,11 +86,14 @@ namespace TravelAgency.Controllers
             return RedirectToAction("ListAll");
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize("Admin")]
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             var reservationToDelete = await _context.Reservations.FindAsync(id);
+
+            if (reservationToDelete == null)
+                return NotFound();
 
             _context.Remove(reservationToDelete);
             await _context.SaveChangesAsync();

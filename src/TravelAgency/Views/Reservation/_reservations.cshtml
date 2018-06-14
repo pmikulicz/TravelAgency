@@ -1,4 +1,6 @@
-﻿@model IEnumerable<ReservationViewModel>
+﻿@using Microsoft.AspNetCore.Authorization
+@model IEnumerable<ReservationViewModel>
+@inject IAuthorizationService AuthorizationService
 
 <div class="container">
 
@@ -33,7 +35,7 @@
                     <td>
                         <a asp-controller="Reservation" asp-action="Edit" asp-route-id="@item.TourId">Edit</a>
                     </td>
-                    @if (User.IsInRole("Admin"))
+                    @if ((await AuthorizationService.AuthorizeAsync(User, "Admin")).Succeeded)
                     {
                         <td>
                             <a asp-controller="Reservation" asp-action="Delete" asp-route-id="@item.TourId">Delete</a>

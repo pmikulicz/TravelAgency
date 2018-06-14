@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -34,11 +37,10 @@
                     <li><a asp-area="" asp-controller="Tour" asp-action="ListAll">Tours</a></li>
                     <li><a asp-area="" asp-controller="Tour" asp-action="Search">Search</a></li>
                     <li><a asp-area="" asp-controller="Reservation" asp-action="My" asp-route-id="@User.Identity.Name">My reservations</a></li>
-                    @if (User.IsInRole("Admin")){
-                        <li><a asp-area="" asp-controller="Administration" asp-action="Index">Search</a></li>
-
-}
-
+                    @if ((await AuthorizationService.AuthorizeAsync(User, "Admin")).Succeeded)
+                    {
+                        <li><a asp-area="" asp-controller="Administration" asp-action="Index">Administration</a></li>
+                    }
                 </ul>
                 <partial name="_LoginPartial" />
             </div>

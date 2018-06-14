@@ -1,12 +1,14 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 using TravelAgency.Domain.Model;
 using TravelAgency.Storage;
 
 namespace TravelAgency.Controllers.Api
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public sealed class ReservationsController : CrudController
@@ -18,6 +20,7 @@ namespace TravelAgency.Controllers.Api
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
+        [Authorize("Admin")]
         [HttpPost]
         public async Task<IActionResult> Post(Reservation reservation)
         {
@@ -29,6 +32,7 @@ namespace TravelAgency.Controllers.Api
             return CreatedAtRoute(new { id = reservation.Id }, reservation);
         }
 
+        [Authorize("Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, Reservation reservation)
         {

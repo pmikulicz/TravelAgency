@@ -19,7 +19,7 @@ namespace TravelAgency
         }
 
         public IConfiguration Configuration { get; }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthentication(sharedOptions =>
@@ -29,7 +29,8 @@ namespace TravelAgency
                 })
                 .AddAzureAd(options => Configuration.Bind("AzureAd", options))
                 .AddCookie();
-
+            services.AddAuthorization(options =>
+                options.AddAzurePolicy(opt => Configuration.Bind("AzureAuth", opt)));
             services.AddMvc(options => options.Filters.Add(new ValidationActionFilter()));
             services.AddDbContext<TravelAgencyDbContext>(opts =>
                 opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),

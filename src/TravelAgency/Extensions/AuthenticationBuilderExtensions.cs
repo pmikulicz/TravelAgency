@@ -1,12 +1,12 @@
-﻿using System;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace TravelAgency.Extensions
 {
-    public static class AzureAdAuthenticationBuilderExtensions
+    public static class AuthenticationBuilderExtensions
     {
         public static AuthenticationBuilder AddAzureAd(this AuthenticationBuilder builder)
             => builder.AddAzureAd(_ => { });
@@ -19,7 +19,7 @@ namespace TravelAgency.Extensions
             return builder;
         }
 
-        private class ConfigureAzureOptions : IConfigureNamedOptions<OpenIdConnectOptions>
+        internal class ConfigureAzureOptions : IConfigureNamedOptions<OpenIdConnectOptions>
         {
             private readonly AzureAdOptions _azureOptions;
 

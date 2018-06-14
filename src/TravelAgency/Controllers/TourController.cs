@@ -25,8 +25,12 @@ namespace TravelAgency.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int id)
         {
-            var tour = await _context.Tours.FindAsync(id);
-            var currentReservations = _context.Reservations.Count(r => r.TourId == tour.Id);
+            Tour tour = await _context.Tours.FindAsync(id);
+
+            if (tour == null)
+                return NotFound();
+
+            int currentReservations = _context.Reservations.Count(r => r.TourId == tour.Id);
 
             return View(new TourViewModel
             {
@@ -40,14 +44,14 @@ namespace TravelAgency.Controllers
             });
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize("Admin")]
         [HttpGet]
         public IActionResult Add()
         {
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize("Admin")]
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(TourViewModel tour)
         {
@@ -103,12 +107,16 @@ namespace TravelAgency.Controllers
             }));
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize("Admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var tour = await _context.Tours.FindAsync(id);
-            var currentReservations = _context.Reservations.Count(r => r.TourId == tour.Id);
+            Tour tour = await _context.Tours.FindAsync(id);
+
+            if (tour == null)
+                return NotFound();
+
+            int currentReservations = _context.Reservations.Count(r => r.TourId == tour.Id);
 
             return View(new TourViewModel
             {
@@ -122,7 +130,7 @@ namespace TravelAgency.Controllers
             });
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize("Admin")]
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(TourViewModel tour)
         {
